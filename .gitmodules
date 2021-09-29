@@ -1,6 +1,3 @@
-[submodule "TextAnalysis/TextAnalysis/KoBART-summarization"]
-	path = TextAnalysis/TextAnalysis/KoBART-summarization
-	url = https://github.com/seujung/KoBART-summarization
 [submodule "TextAnalysis/KoBART-summarization"]
 	path = TextAnalysis/KoBART-summarization
 	url = https://github.com/seujung/KoBART-summarization
