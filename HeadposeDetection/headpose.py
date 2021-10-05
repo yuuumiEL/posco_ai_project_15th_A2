@@ -11,8 +11,8 @@ import numpy as np
 import os
 import os.path as osp
 
-from timer import Timer
-from utils import Annotator
+from HeadposeDetection.timer import Timer
+from HeadposeDetection.utils import Annotator
 
 
 t = Timer()
