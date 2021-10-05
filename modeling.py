@@ -90,6 +90,7 @@ def main(args):
 
     # Initialize head pose detection
     hpd = headpose.HeadposeDetection(args["landmark_type"], args["landmark_predictor"])
+    k = open("angles.csv", 'w')
 
     if cap.isOpened():  ########## 캡쳐 객체 초기화 확인
         while True:
@@ -108,6 +109,7 @@ def main(args):
                     else:
                         frame = cv2.flip(frame, 1)
                         frame, angles = hpd.process_image(frame)
+
                     ## 64
                     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                     rects = detector(gray, 0)
@@ -146,13 +148,25 @@ def main(args):
                     cv2.putText(frame, "Right pupil: " + str(right_pupil), (90, 165), cv2.FONT_HERSHEY_DUPLEX, 0.9,
                                 (147, 58, 31), 1)
 
+                    if left_pupil == None or right_pupil == None:
+                        pupil_right_x = None
+                        pupil_right_y = None
+                        pupil_left_x = None
+                        pupil_left_y = None
+                    else:
+                        pupil_right_x = right_pupil[0]
+                        pupil_right_y = right_pupil[1]
+                        pupil_left_x = left_pupil[0]
+                        pupil_left_y = left_pupil[1]
+                    k.write('{0}\t{1}\t{2}\t{3}\t{4} \n'.format(angles, pupil_right_x, pupil_right_y, pupil_left_x,
+                                                                pupil_left_y))
                     cv2.imshow("Demo", frame)
                     cv2.waitKey(100)  #####프레임을 지연시킴 100ms 이게 제일 중요
                 else:
                     break
             else:
                 break
-
+    k.close()
     print("end")
     cap.release()
     cv2.destroyAllWindows()
