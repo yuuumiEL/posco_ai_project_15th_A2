@@ -10,8 +10,7 @@ import os.path as osp
 from GazeTracking.gaze_tracking import GazeTracking
 from HeadposeDetection import headpose
 
-
-CHUNK = 1024
+CHUNK = 4096 # windows:1024, macOS: 4096
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 44100
@@ -57,7 +56,7 @@ wf.writeframes(b''.join(frame_aud))
 wf.close()
 
 ## 64
-p = "HeadposeDetection/models/shape_predictor_68_face_landmarks.dat"
+p = "HeadposeDetection/model/shape_predictor_68_face_landmarks.dat"
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(p)
 
@@ -180,6 +179,6 @@ if __name__ == '__main__':
     parser.add_argument('-wh', metavar='N', dest='wh', default=[720, 480], nargs=2, help='Frame size.')
     parser.add_argument('-lt', metavar='N', dest='landmark_type', type=int, default=1, help='Landmark type.')
     parser.add_argument('-lp', metavar='FILE', dest='landmark_predictor',
-                        default='./model/shape_predictor_68_face_landmarks.dat', help="Landmark predictor data file.")
+                        default='HeadposeDetection/model/shape_predictor_68_face_landmarks.dat', help="Landmark predictor data file.")
     args = vars(parser.parse_args())
     main(args)
